@@ -4,12 +4,27 @@ import { useParams } from 'react-router-dom';
 import { Flex, Img, Box, Text, Button } from '@chakra-ui/react';
 import Loader from '../layout/Loader';
 import { config } from '../config/index';
+import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { bookmarkActions } from '../store';
 
 function RecipeInfo(props) {
   const [recipeInfo, setRecipeInfo] = useState([]);
   const [isIingredientActive, setIsIingredientActive] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const bkstyle = { color: '#f26046' };
+  const bookmarkData = useSelector((state) => state.bookmark.savedBookmarks);
+  const isMarked = bookmarkData.find((item) => item.id == id);
+
+  const bookmarkHandler = () => {
+    if (!isMarked) {
+      dispatch(bookmarkActions.addBookmark(recipeInfo));
+    } else {
+      dispatch(bookmarkActions.removeBookmark(recipeInfo.id));
+    }
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -26,7 +41,7 @@ function RecipeInfo(props) {
         });
     };
     fetchInfo();
-  }, []);
+  }, [id]);
 
   return (
     <>
@@ -56,29 +71,39 @@ function RecipeInfo(props) {
             </Box>
           </Flex>
           <Flex flexDirection={'column'} padding="2em" mt={'.5em'}>
-            <Flex gap={'.7rem'}>
-              <Button
-                bgColor={!isIingredientActive && '#303030'}
-                color={!isIingredientActive && 'white'}
-                borderRadius={'0'}
-                _hover={'none'}
-                onClick={() => {
-                  setIsIingredientActive(false);
-                }}
-              >
-                Instructions
-              </Button>
-              <Button
-                bgColor={isIingredientActive && '#303030'}
-                color={isIingredientActive && 'white'}
-                borderRadius={'0'}
-                _hover={'none'}
-                onClick={() => {
-                  setIsIingredientActive(true);
-                }}
-              >
-                Ingredients
-              </Button>
+            <Flex justifyContent={'space-between'} pr="1em">
+              <Flex gap={'.7rem'}>
+                <Button
+                  bgColor={!isIingredientActive && '#303030'}
+                  color={!isIingredientActive && 'white'}
+                  borderRadius={'0'}
+                  _hover={'none'}
+                  onClick={() => {
+                    setIsIingredientActive(false);
+                  }}
+                >
+                  Instructions
+                </Button>
+                <Button
+                  bgColor={isIingredientActive && '#303030'}
+                  color={isIingredientActive && 'white'}
+                  borderRadius={'0'}
+                  _hover={'none'}
+                  onClick={() => {
+                    setIsIingredientActive(true);
+                  }}
+                >
+                  Ingredients
+                </Button>
+              </Flex>
+              <Flex alignItems={'center'}>
+                <Text fontSize={'1.2rem'}>
+                  <FaRegBookmark
+                    style={isMarked && bkstyle}
+                    onClick={bookmarkHandler}
+                  />
+                </Text>
+              </Flex>
             </Flex>
             {isIingredientActive ? (
               <Ingredients ingredients={recipeInfo.extendedIngredients} />

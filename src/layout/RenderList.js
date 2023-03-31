@@ -16,7 +16,7 @@ function RenderList({
 }) {
   const [recipeData, setRecipeData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  console.log(recipeData);
   // FETCHING DATA FROM API
   useEffect(() => {
     const storedData = localStorage.getItem(query);
@@ -36,6 +36,7 @@ function RenderList({
         .then((res) => {
           console.log('Api Random Req send !');
           const responseData = res.data;
+
           setRecipeData(responseData);
           setIsLoading(false);
         })
@@ -48,7 +49,9 @@ function RenderList({
         .then((res) => {
           console.log('APi Search Req send !');
           const responseData = res.data.results;
-          localStorage.setItem(query, JSON.stringify(responseData));
+          if (responseData.length !== 0) {
+            localStorage.setItem(query, JSON.stringify(responseData));
+          }
           setRecipeData(responseData);
           setIsLoading(false);
         })
@@ -85,7 +88,7 @@ function RenderList({
             style={{ scrollbarWidth: 'none' }}
           >
             {recipeData.map((item) => {
-              return <ImgCard item={item} />;
+              return <ImgCard key={item.id} item={item} />;
             })}
           </Grid>
         </Box>

@@ -1,14 +1,20 @@
-import { FaPizzaSlice, FaHamburger, FaRandom } from 'react-icons/fa';
+import {
+  FaPizzaSlice,
+  FaHamburger,
+  FaRandom,
+  FaBookmark,
+} from 'react-icons/fa';
 import { GiNoodles, GiChopsticks } from 'react-icons/gi';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 const items = [
-  { id: '/', origin: 'Random', icon: <FaRandom /> },
-  { id: 'italian', origin: 'Italian', icon: <FaPizzaSlice /> },
-  { id: 'american', origin: 'American', icon: <FaHamburger /> },
-  { id: 'thai', origin: 'Thai', icon: <GiNoodles /> },
-  { id: 'japanese', origin: 'Japanese', icon: <GiChopsticks /> },
+  { path: '/', origin: 'Random', icon: <FaRandom /> },
+  { path: '/cuisine/italian', origin: 'Italian', icon: <FaPizzaSlice /> },
+  { path: '/cuisine/american', origin: 'American', icon: <FaHamburger /> },
+  { path: '/cuisine/thai', origin: 'Thai', icon: <GiNoodles /> },
+  { path: '/cuisine/japanese', origin: 'Japanese', icon: <GiChopsticks /> },
+  { path: 'bookmark', origin: 'bookmark', icon: <FaBookmark /> },
 ];
 
 function CuisineBar() {
@@ -18,14 +24,12 @@ function CuisineBar() {
         {items.map((item) => {
           return (
             <Flex
+              key={item.path}
               justifyItems={'center'}
               alignItems={'center'}
               flexDirection="column"
             >
-              <Link
-                to={item.id !== '/' ? `/cuisine/${item.id}` : '/'}
-                key={item.id}
-              >
+              <Link to={item.path} key={item.path}>
                 <Box
                   width={'fit-content'}
                   cursor={'pointer'}

@@ -48,6 +48,7 @@ function RecipeInfo(props) {
             </Box>
             <Box mt={'.5rem'}>
               <Img
+                style={{ fontFamily: 'Alkatra', fontWeight: 400 }}
                 borderRadius={'1.2rem'}
                 src={recipeInfo.image}
                 alt="No Image Found !"
@@ -99,7 +100,7 @@ const Instructions = ({ summary, instructions }) => {
     <Box mt={'.7rem'}>
       <h3 dangerouslySetInnerHTML={{ __html: summary }}></h3>
       <h3
-        style={{ padding: '.5em 0 0 1em' }}
+        style={{ padding: '.5em 0 0 0' }}
         dangerouslySetInnerHTML={{ __html: instructions }}
       ></h3>
     </Box>

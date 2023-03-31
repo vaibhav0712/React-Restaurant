@@ -5,6 +5,7 @@ import ImgCard from '../components/ImgCard';
 import Loader from './Loader';
 import NotFound from '../components/NotFound';
 import { config } from '../config/index';
+import React from 'react';
 
 function RenderList({
   query,
@@ -18,16 +19,22 @@ function RenderList({
 
   // FETCHING DATA FROM API
   useEffect(() => {
-    setIsLoading(true);
+    const storedData = localStorage.getItem(query);
+    if (storedData) {
+      setRecipeData(JSON.parse(storedData));
+      setIsLoading(false);
+      return;
+    }
 
-    const randomApi = () => {
-      console.log('Random Req send !');
+    setIsLoading(true);
+    if (random === true) {
       axios
         .post(`${config.SERVER_URL}/random`, {
           target: 'vegetarian',
           number: number,
         })
         .then((res) => {
+          console.log('Api Random Req send !');
           const responseData = res.data;
           setRecipeData(responseData);
           setIsLoading(false);
@@ -35,27 +42,21 @@ function RenderList({
         .catch((err) => {
           console.err(err);
         });
-    };
-
-    const searchApi = () => {
-      console.log('Search Req send !');
+    } else {
       axios
         .post(`${config.SERVER_URL}/search`, { target: query })
         .then((res) => {
+          console.log('APi Search Req send !');
           const responseData = res.data.results;
+          localStorage.setItem(query, JSON.stringify(responseData));
           setRecipeData(responseData);
           setIsLoading(false);
         })
         .catch((err) => {
           console.err(err);
         });
-    };
-    if (random === true) {
-      randomApi();
-    } else {
-      searchApi();
     }
-  }, [query, random]);
+  }, [query]);
 
   return (
     <>

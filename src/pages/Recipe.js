@@ -70,7 +70,7 @@ function RecipeInfo(props) {
               />
             </Box>
           </Flex>
-          <Flex flexDirection={'column'} padding="2em" mt={'.5em'}>
+          <Flex flexDirection={'column'} padding="2em" mt={'.5em'} w="full">
             <Flex justifyContent={'space-between'} pr="1em">
               <Flex gap={'.7rem'}>
                 <Button

@@ -16,7 +16,7 @@ function RenderList({
 }) {
   const [recipeData, setRecipeData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(recipeData);
+  // console.log(recipeData);
   // FETCHING DATA FROM API
   useEffect(() => {
     const storedData = localStorage.getItem(query);
@@ -34,7 +34,7 @@ function RenderList({
           number: number,
         })
         .then((res) => {
-          console.log('Api Random Req send !');
+          // console.log('Api Random Req send !');
           const responseData = res.data;
 
           setRecipeData(responseData);
@@ -47,7 +47,7 @@ function RenderList({
       axios
         .post(`${config.SERVER_URL}/search`, { target: query })
         .then((res) => {
-          console.log('APi Search Req send !');
+          // console.log('APi Search Req send !');
           const responseData = res.data.results;
           if (responseData.length !== 0) {
             localStorage.setItem(query, JSON.stringify(responseData));

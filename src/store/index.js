@@ -15,7 +15,7 @@ const bookmarkSlice = createSlice({
     },
     removeBookmark(state, action) {
       const id = action.payload;
-      console.log('payload recived => ', id);
+      // console.log('payload recived => ', id);
       state.savedBookmarks = state.savedBookmarks.filter(
         (item) => item.id !== id
       );

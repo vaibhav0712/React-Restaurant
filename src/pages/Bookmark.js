@@ -7,7 +7,7 @@ import { Grid, Box, Text } from '@chakra-ui/react';
 function BookMark(props) {
   const recipeData = useSelector((state) => state.bookmark.savedBookmarks);
   localStorage.setItem('bookmark', JSON.stringify(recipeData));
-  console.log(recipeData);
+  // console.log(recipeData);
 
   return (
     <Box>
@@ -32,7 +32,7 @@ function BookMark(props) {
         style={{ scrollbarWidth: 'none' }}
       >
         {recipeData.map((item) => {
-          return <ImgCard item={item} />;
+          return <ImgCard key={item.id} item={item} />;
         })}
       </Grid>
     </Box>

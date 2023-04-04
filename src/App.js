@@ -17,7 +17,7 @@ function App() {
   useEffect(() => {
     const storedData = localStorage.getItem('bk');
     if (storedData) {
-      console.log('show ==> ', JSON.parse(storedData));
+      // console.log('show ==> ', JSON.parse(storedData));
       dispatch(bookmarkActions.replaceBookmark(JSON.parse(storedData)));
       return;
     }
@@ -27,7 +27,7 @@ function App() {
     localStorage.setItem('bk', JSON.stringify(current));
   }, [current]);
 
-  console.log(current);
+  // console.log(current);
   return (
     <Routes>
       <Route path="/" element={<Navigation />}>
